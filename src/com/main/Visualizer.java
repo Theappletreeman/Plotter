@@ -19,6 +19,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -92,6 +93,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 	private JMenuItem jmt21;
 	private JMenuItem jmt22;
 	private Properties p;
+	private boolean defaultProperties=false;
 	private JMenu jm3;
 	private JMenuItem jmt31;
 	private JMenuItem jmt23;
@@ -681,7 +683,12 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 			
 		} catch (Exception e) {
 		
-			e.printStackTrace();
+			try{
+				p.store(new FileOutputStream("mathgraphics.properties"),null);
+			}catch (Exception e2){
+				e2.getStackTrace();
+			}
+			
 		}
 		
 	}
@@ -926,6 +933,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		else{
 			p2.setProperty("LINE_3D_COLOR",Colorpanel.decomposeColor(LINE_3D_COLOR));
 		}
+		
 
 	}
 
