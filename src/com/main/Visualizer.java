@@ -2,6 +2,7 @@ package com.main;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -19,7 +20,9 @@ import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -87,6 +90,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 	private JMenuItem jmt3;
 	private JMenuItem jmt2;
 	private JMenuItem jmt4;
+	private JMenuItem jmt5;
 	private JMenu jm;
 	private boolean redrawAfterMenu=false;
 	private JMenu jm2;
@@ -204,10 +208,13 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		jmt3.addActionListener(this);
 		jmt4=new JMenuItem("Show DF");
 		jmt4.addActionListener(this);
+		jmt5=new JMenuItem("Read Me");
+		jmt5.addActionListener(this);
 		jm.add(jmt2);
 		
 		jm.add(jmt3);
 		jm.add(jmt4);
+		jm.add(jmt5);
 		jm.addSeparator();
 		jm.add(jmt1);
 		jmb.add(jm);
@@ -727,6 +734,17 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 				
 				draw();
 				
+		}
+		else if (o==jmt5){
+			Desktop desktop = Desktop.getDesktop();
+			File file = new File("README.txt");
+			try {
+				desktop.open(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		else if (o==jmt1) exit();
 		else if(o==jmt21) {
