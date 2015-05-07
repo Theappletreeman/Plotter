@@ -704,11 +704,9 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		if(o==draw || o==jmt2 )
 			draw();
 		else if (o==more){
-			draw();
 			zoom(+1);
 		}
 		else if (o==less){
-			draw();
 			zoom(-1);
 		}
 		else if (o==calculateIntegral ||o==jmt3){
@@ -955,6 +953,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 	 * 
 	 */
 	private void zoom(int i) {
+		draw();
 		calc.zoom(i);
 		double alfa=1.0;
 		if(i>0){
@@ -1025,21 +1024,25 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 	
 
 	public void keyPressed(KeyEvent arg0) {
+		boolean graphFocus=!displayedFunction.hasFocus() && !displayedA.hasFocus()&& !displayedB.hasFocus();
+		if(displayedA2!=null && displayedB2!=null){
+			graphFocus= graphFocus && !displayedA2.hasFocus() && !displayedB2.hasFocus();
+		}
 		int code =arg0.getKeyCode();
-		if(code==KeyEvent.VK_LEFT && !displayedFunction.hasFocus())
+		if(code==KeyEvent.VK_LEFT && graphFocus)
 			left(+1);
-		else if(code==KeyEvent.VK_RIGHT  && !displayedFunction.hasFocus() )
+		else if(code==KeyEvent.VK_RIGHT  && graphFocus )
 			left(-1);
-		else if(code==KeyEvent.VK_UP)
+		else if(code==KeyEvent.VK_UP && graphFocus)
 							up(-1);
-		else if(code==KeyEvent.VK_DOWN )
+		else if(code==KeyEvent.VK_DOWN && graphFocus)
 							up(+1);
 		else if(code==KeyEvent.VK_D)
 								draw();
-		else if(code==KeyEvent.VK_PLUS && !displayedFunction.hasFocus())
-								zoom(-1);
-		else if(code==KeyEvent.VK_MINUS && !displayedFunction.hasFocus())
+		else if((code==KeyEvent.VK_ADD || code==KeyEvent.VK_EQUALS || code==KeyEvent.VK_PLUS) && graphFocus)
 								zoom(+1);
+		else if((code==KeyEvent.VK_MINUS || code==KeyEvent.VK_SUBTRACT) && graphFocus)
+								zoom(-1);
 		
 	}
 
