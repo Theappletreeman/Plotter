@@ -704,10 +704,11 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		if(o==draw || o==jmt2 )
 			draw();
 		else if (o==more){
+			draw();
 			zoom(+1);
 		}
 		else if (o==less){
-			
+			draw();
 			zoom(-1);
 		}
 		else if (o==calculateIntegral ||o==jmt3){
