@@ -19,6 +19,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,6 +40,7 @@ import javax.swing.JTextField;
 import javax.swing.RepaintManager;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.maths.Calculator;
 
@@ -233,7 +235,6 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		jm2.addMenuListener(this);
 		jmb.add(jm2);
 		
-		
 		jm3=new JMenu("Colors");
 		jm3.addMenuListener(this);
 		jmt31=new JMenuItem("Change colors");
@@ -253,8 +254,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		
 		jmb.add(jm4);
 		
-		setJMenuBar(jmb);
-		
+		setJMenuBar(jmb);	
 		
 	}
 
@@ -823,25 +823,39 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 
 	private void saveImage() {
 		
-		
+		fc= new JFileChooser();
 		fc.setDialogType(JFileChooser.SAVE_DIALOG);
 		if(currentDirectory!=null)
 			fc.setCurrentDirectory(currentDirectory);
 		
-		int returnVal = fc.showOpenDialog(this);
+		fc.setDialogTitle("Save Graph Image");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG", "jpg");
+		FileNameExtensionFilter filter2 = new FileNameExtensionFilter("PNG", "png");
+		fc.setFileFilter(filter);
+		fc.addChoosableFileFilter(filter2);
+		int returnVal = fc.showSaveDialog(this);
+		
 		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			
 			currentDirectory=fc.getCurrentDirectory();
 			File file = fc.getSelectedFile();
-			saveImage(file);
 			
+				String ext="";
+				if (fc.getFileFilter().getDescription()==filter2.getDescription()){
+					ext="png";
+				}
+				else if(fc.getFileFilter().getDescription()==filter.getDescription()) {
+					ext="jpg";
+				}
+				
+				saveImage(file,ext);
 		} 
 		
 		
 	}
 	
-	private void saveImage(File file) {
+	private void saveImage(File file, String ext) {
 		
 		//drawFace();
 		BufferedImage buf=new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
@@ -849,7 +863,18 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		try {
 			Graphics2D bufGraphics=(Graphics2D)buf.getGraphics();
 			draw(bufGraphics);
-			ImageIO.write(buf,"jpg",file);
+			String dot=".";
+			String ext2=ext;
+			if (ext==""){
+				dot="";
+				ext2="";
+				ext="png";
+			}
+			String newFilePath = file.getAbsolutePath().replace(file.getName(), "") + (file.getName()+dot+ext2);
+			file = new File(newFilePath);
+			System.out.println(file.getAbsolutePath());
+			
+			ImageIO.write(buf,ext,file);
 			
 		} catch (Exception e) {
 			
