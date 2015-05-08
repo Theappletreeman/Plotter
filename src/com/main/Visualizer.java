@@ -199,7 +199,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 	private void buildMenuBar() {
 		
 		jmb=new JMenuBar();
-		jm=new JMenu("Do");
+		jm=new JMenu("File");
 		jm.addMenuListener(this);
 		
 		jmt1=new JMenuItem("Exit");
