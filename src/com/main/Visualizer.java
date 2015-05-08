@@ -208,7 +208,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		jmt2.addActionListener(this);
 		jmt3=new JMenuItem("Integral");
 		jmt3.addActionListener(this);
-		jmt4=new JMenuItem("Show DF");
+		jmt4=new JMenuItem("Derivative");
 		jmt4.addActionListener(this);
 		jmt5=new JMenuItem("Read Me");
 		jmt5.addActionListener(this);
@@ -493,7 +493,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		calculateIntegral.addActionListener(this);
 		right.add(calculateIntegral);
 		
-		displayDerivative=new JButton("Show DF");
+		displayDerivative=new JButton("Derivative");
 		displayDerivative.setBounds(5,180,100,20);
 		displayDerivative.addActionListener(this);
 		right.add(displayDerivative);
@@ -728,8 +728,8 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 				      jmt4.setText("No DF");
 				}
 				else {
-					displayDerivative.setText("Show DF");
-					jmt4.setText("Show DF");
+					displayDerivative.setText("Derivative");
+					jmt4.setText("Derivative");
 				}
 				
 				draw();
