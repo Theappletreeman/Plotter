@@ -123,7 +123,7 @@ public class Visualizer extends JFrame implements ActionListener,KeyListener,
 		
 		center=new JPanel();	
 		center.addMouseWheelListener(this);
-		
+		setResizable(false);
 		setLocation(20,20);
 		setTitle(VERSION);
 		setSize(LEFTBORDER+WIDTH+RIGHTBORDER,UPBORDER+HEIGHT+BUTTOMBORDER);
